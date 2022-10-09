@@ -1,12 +1,14 @@
+
 body
 {
-	background-color: #2F3336;
-	color: #efefef;
+    background-image: url("img/tło.png") !important;
+	background-size: auto;
+	color: black;
     font-size: 17px;
 }
 
 .navbar
 {
-	background-color: #8B4513 !important;
+	background-color: #D6983A !important;
 }
 
