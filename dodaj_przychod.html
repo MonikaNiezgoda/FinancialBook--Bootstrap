@@ -123,13 +123,36 @@
 					<div class="row justify-content-center">
 		
 							<div class="col-2">
-							 <a  class="btn btn-success btn-md btn-block" href="dodaj_przychod.html"role="button">Dodaj</a>
+							 <button type="button" class="btn btn-success btn-md btn-block" data-toggle="modal" data-target="#modal">
+								  Dodaj
+								</button>
 							</div>
 				
 							
 							<div class="col-2">
 							  <a  class="btn btn-secondary btn-md btn-block" href="menu_glowne.html" role="button">Anuluj</a>
 							</div>
+					</div>
+					
+					<!-- Modal -->
+					<div class="modal fade" id="modal" tabindex="-1" data-backdrop="static" data-keyboard="false"aria-labelledby="modalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="modalLabel">Przychód zostanie dodany</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  <div class="modal-body">
+							Czy na pewno chcesz dodać przychód?
+						  </div>
+						  <div class="modal-footer">
+							 <a  class="btn btn-primary btn-md" href="dodaj_przychod.html"role="button">Tak</a>
+							<button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Nie</button>
+						  </div>
+						</div>
+					  </div>
 					</div>
 					
 
