@@ -40,7 +40,8 @@ select:focus
 	border: 2px solid  #D6983A !important;
 }
 
-.btn-md {
+.btn-md
+ {
 	    border-width: 0;
 	    outline: none;
 	    border-radius: 2px;
