@@ -1,12 +1,16 @@
 
 body
 {
+	font-family: 'Montserrat', sans-serif;
     background-image: url("img/tło.png") !important;
 	background-size: auto;
 	color: black;
-    font-size: 17px;
+    font-size: 15px;
 }
-
+.h5
+{
+	font-weight:500 !important;
+}
 .navbar
 {
 	background-color: #D6983A !important;
