@@ -52,3 +52,18 @@ select:focus
 	    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 	    cursor: pointer;
 	}
+	
+	.table
+	{
+	background-color:#F7EFC2;
+	}
+	
+	td
+	{
+		width: 50%;
+	}
+	
+	.dropdown-item:hover
+{
+	background-color: #F7EFC2 !important;
+}

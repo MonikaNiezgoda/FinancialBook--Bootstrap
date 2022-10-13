@@ -80,18 +80,169 @@
 		</header>
 				<main>
 					<div class="container">
-					 <div class="row mt-2">
-						 <div class="col-md-4 text-center">
-								<img src="img/facet.jpg" class="img-fluid" alt="kciuk">
+						<div class="row justify-content-center mb-2 mt-2">
+							<div class= "col-md-4">
+								<h3> Przeglądanie bilansu</h3>
+							</div>
+							<div class="col-md-4">	
+								<div class="dropdown">
+									  <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+										Wybierz zakres dat
+									  </button>
+									  <div class="dropdown-menu">
+										<a class="dropdown-item"  data-toggle="collapse" href="#collapse1" aria-expanded="false" aria-controls="collapse">Bieżący miesiąc</a>
+										<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
+										<a class="dropdown-item" href="#">Bieżący rok</a>
+										<a class="dropdown-item" href="#">Niestandardowy</a>
+									  </div>
 								</div>
-							<div class="col-md-8 text-center mt-2">
-								<h2> Witaj!</h2>
-								<p> Cieszę się, że zacząłeś ogarniać swoje finanse z pomocą tej aplikacji!</p>
-									<p>Co chciałbyś teraz zrobić?</p>
 							</div>
 						</div>
-					 </div>
-	
+						
+						<div class="collapse" id="collapse1">
+							<div class="row">
+									<div class="col-md-6 my-2">
+										<table class="table table-bordered table-hover">
+											<thead>
+												<tr>
+												<th colspan="2" class="text-center"> Przychody z bieżącego miesiąca</th>
+												</tr>
+												<tr>
+													<th scope="col">Kategoria</th>
+													<th scope="col">Suma</th>
+												</tr>
+												<tbody>
+													<tr>
+														<td>Wynagrodzenie</td>
+														<td> </td>
+													</tr>
+													<tr>
+														<td>Odsetki bankowe</td>
+														<td> </td>
+													</tr>
+													<tr>
+														<td>Sprzedaż na allegro</td>
+														<td> </td>
+													</tr>
+													<tr>
+														<td>Inne</td>
+														<td> </td>
+													</tr>
+												</tbody>
+											</thead>
+										</table>	
+										
+										
+										
+
+									</div>
+								
+								<div class="col-md-6 my-2">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+											<th colspan="2" class="text-center"> Wydatki z bieżącego miesiąca</th>
+											</tr>
+											<tr>
+												<th scope="col">Kategoria</th>
+												<th scope="col">Suma</th>
+											</tr>
+											<tbody>
+												<tr>
+													<td>Jedzenie</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Mieszkanie</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Transport</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Telekomunikacja</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Opieka zdrowotna</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Ubranie</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Higiena</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Dzieci</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Rozrywka</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Wycieczka</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Szkolenia</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Książki</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Oszczędności</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Na złotą jesień, czyli emeryturę</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Spłata długów</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Darowizna</td>
+													<td> </td>
+												</tr>
+												<tr>
+													<td>Inne wydatki</td>
+													<td> </td>
+												</tr>
+											</tbody>
+										</thead>
+									</table>
+								</div>
+							</div>
+							
+							<div class="d-flex justify-content-center row" >
+											<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" href="#collapseAlert" aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
+										</div>
+										
+										<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
+										  Uważaj wpadasz w dług!
+										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										  </button>
+
+										</div>
+							
+						</div>
+						
+						
+							
+					</div>
+							
+							
+		
+				
 				</main>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			
