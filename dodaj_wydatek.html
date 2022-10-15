@@ -19,10 +19,22 @@
 	<!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<![endif]-->
+	<script type="text/javascript">
+	function ustawDate()
+	{
+		var  dzisiaj = new Date();
+		var dzien = dzisiaj.getDate();
+		var miesiac = dzisiaj.getMonth()+1;
+		var rok = dzisiaj.getFullYear();
+		var dzisiejszaData = rok+"-"+miesiac+"-"+dzien;
+		
+		document.getElementById("data").setAttribute('value',dzisiejszaData);
+	}
 	
+	</script>
 </head>
 
-<body>
+<body onload="ustawDate();">
 		<header>
 				<h1 class="display-5 h-5 text-center my-2"> Twój budżet</h1>
 				
@@ -96,8 +108,7 @@
 						<div class="row justify-content-center">
 							<div class="col-md-6 col-8 ">
 								<div class="input-group mb-3 inline-block">
-								  <input type="date" class="form-control input-sm  "  id="data" value="2022-10-09" min="1990-01-01">
-									  
+								  <input type="date" class="form-control input-sm"  id="data"  min="1990-01-01" onload="ustawDate();"> 
 								</div>
 							</div>
 						</div>
@@ -167,8 +178,7 @@
 						</div>
 					  </div>
 					</div>
-
-					
+								
 
 				</div>
 			</main>
