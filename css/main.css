@@ -66,4 +66,12 @@ select:focus
 	.dropdown-item:hover
 {
 	background-color: #F7EFC2 !important;
+	
+}
+
+.error
+{
+	color: red !important;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }

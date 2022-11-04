@@ -1,3 +1,91 @@
+<?php
+
+	session_start();
+	
+	if(isset($_POST['email']))
+	{
+		//Udana walidacja - flaga ustawiona true
+		$wszystko_OK=true;
+		
+		$imie=$_POST['imie'];
+		
+		//Sprawdzenie poprawności adresu email
+		
+		$email=$_POST['email'];
+		$emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
+		
+		if((filter_var($emailB, FILTER_SANITIZE_EMAIL)==false) || ($emailB!=$email))
+			{
+				$wszystko_OK=false;
+				$_SESSION['e_email']="Podaj poprawny adres email";
+			}
+			
+			//Sprawdź poprawność hasła
+		$haslo = $_POST['haslo'];
+		
+		if ((strlen($haslo)<8) || (strlen($haslo)>20))
+		{
+			$wszystko_OK=false;
+			$_SESSION['e_haslo']="Hasło musi posiadać od 8 do 20 znaków!";
+		}
+		
+		$haslo_hash = password_hash($haslo, PASSWORD_DEFAULT);
+		
+		require_once "database.php";
+		//mysqli_report(MYSQLI_REPORT_STRICT);
+		
+		try 
+		{
+			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+			if ($polaczenie->connect_errno!=0)
+			{
+				throw new Exception(mysqli_connect_errno());
+			}
+			else
+			{
+				//Czy email już istnieje?
+				$rezultat = $polaczenie->query("SELECT id FROM users WHERE email='$email'");
+				
+				if (!$rezultat) throw new Exception($polaczenie->error);
+				
+				$ile_takich_maili = $rezultat->num_rows;
+				if($ile_takich_maili>0)
+				{
+					$wszystko_OK=false;
+					$_SESSION['e_email']="Istnieje już konto przypisane do tego adresu e-mail!";
+				}		
+
+				if ($wszystko_OK==true)
+				{
+					
+					if ($polaczenie->query("INSERT INTO users VALUES (NULL, '$imie', '$haslo_hash', '$email')"))
+					{
+						$_SESSION['udanarejestracja']=true;
+						header('Location: menu_glowne.php');
+					}
+					else
+					{
+						throw new Exception($polaczenie->error);
+					}
+					
+				}
+				
+				$polaczenie->close();
+			}
+			
+		}
+		catch(Exception $e)
+		{
+			echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o rejestrację w innym terminie!</span>';
+			echo '<br />Informacja developerska: '.$e;
+		}
+	
+	}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -58,10 +146,18 @@
 										  <div class="input-group-prepend">
 											<span class="input-group-text" id="basic-addon">@</span>
 										  </div>
-										  <input type="email" class="form-control" placeholder="Email" aria-label="UserEmail" aria-describedby="basic-addon" name="email">
+										  <input type="email" class="form-control" placeholder="Email" aria-label="UserEmail" aria-describedby="basic-addon" name="email"/>	 <br/>
+										  <?php
+											if (isset($_SESSION['e_email']))
+											{
+												echo '<div class="row justify-content-center error">'.$_SESSION['e_email'].'</div>';
+												unset($_SESSION['e_email']);
+											}
+										?>
 								</div>
-							</div>
+							</div>	
 						</div>
+						
 						<div class="row justify-content-center">
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3">
@@ -71,24 +167,29 @@
 												</svg></span>
 										  </div>
 										  <input type="password" class="form-control" placeholder="Hasło" aria-label="UserPassword" aria-describedby="basic-addon" name="haslo">
+										  <?php
+											if (isset($_SESSION['e_haslo']))
+											{
+												echo '<br/><div class="error">'.$_SESSION['e_haslo'].'</div>';
+												unset($_SESSION['e_haslo']);
+											}
+										?>		
 								</div>
 							 </div>
 						</div>
-					</form>
+					
 					
 						<div class="row justify-content-center">
 			
 								<div class="col-4  col-md-3">
-								 <a class="btn btn-success btn-md btn-block" href="index.html" role="button">
-									  Zarejestruj
-									</a>
+								 <input type="submit" value="Zarejestruj się" class="btn btn-success btn-md btn-block"/>
 								</div>
 		
 								<div class="col-4  col-md-3">
 								  <a  class="btn btn-secondary btn-md btn-block" href="index.html" role="button">Anuluj</a>
 								</div>
 						</div>
-					
+					</form>
 				
 					</div>
 				</main>
