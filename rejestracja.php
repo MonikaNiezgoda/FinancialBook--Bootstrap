@@ -2,6 +2,8 @@
 
 	session_start();
 	
+	require_once "database.php";
+	
 	if(isset($_POST['email']))
 	{
 		//Udana walidacja - flaga ustawiona true
@@ -11,14 +13,27 @@
 		
 		//Sprawdzenie poprawności adresu email
 		
-		$email=$_POST['email'];
-		$emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
+		$email = filter_input(INPUT_POST, 'email',FILTER_VALIDATE_EMAIL);
 		
-		if((filter_var($emailB, FILTER_SANITIZE_EMAIL)==false) || ($emailB!=$email))
-			{
-				$wszystko_OK=false;
-				$_SESSION['e_email']="Podaj poprawny adres email";
+		if(empty($email)){
+			
+			$wszystko_OK=false;
+			$_SESSION['e_haslo']="Niewłaściwy adres email!";
+		}
+			else{
+			
+			$rezultat = $db->prepare("SELECT id FROM users WHERE email= :email");
+			$rezultat->bindValue(':email',$email, PDO::PARAM_STR);
+			$rezultat->execute();
+				
+			$ile_takich_maili = $rezultat->rowCount();
+				if($ile_takich_maili>0)
+				{
+					$wszystko_OK=false;
+					$_SESSION['e_email']="Istnieje już konto przypisane do tego adresu e-mail!";
+				}
 			}
+			
 			
 			//Sprawdź poprawność hasła
 		$haslo = $_POST['haslo'];
@@ -31,55 +46,18 @@
 		
 		$haslo_hash = password_hash($haslo, PASSWORD_DEFAULT);
 		
-		require_once "database.php";
-		//mysqli_report(MYSQLI_REPORT_STRICT);
-		
-		try 
-		{
-			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-			if ($polaczenie->connect_errno!=0)
-			{
-				throw new Exception(mysqli_connect_errno());
-			}
-			else
-			{
-				//Czy email już istnieje?
-				$rezultat = $polaczenie->query("SELECT id FROM users WHERE email='$email'");
-				
-				if (!$rezultat) throw new Exception($polaczenie->error);
-				
-				$ile_takich_maili = $rezultat->num_rows;
-				if($ile_takich_maili>0)
-				{
-					$wszystko_OK=false;
-					$_SESSION['e_email']="Istnieje już konto przypisane do tego adresu e-mail!";
-				}		
 
 				if ($wszystko_OK==true)
 				{
 					
-					if ($polaczenie->query("INSERT INTO users VALUES (NULL, '$imie', '$haslo_hash', '$email')"))
-					{
+					$query = $db->prepare("INSERT INTO users VALUES (NULL, '$imie', '$haslo_hash', :email)");
+					$query->bindValue(':email', $email, PDO::PARAM_STR);
+					$query->execute();
+				
 						$_SESSION['udanarejestracja']=true;
 						header('Location: menu_glowne.php');
-					}
-					else
-					{
-						throw new Exception($polaczenie->error);
-					}
-					
 				}
-				
-				$polaczenie->close();
-			}
-			
-		}
-		catch(Exception $e)
-		{
-			echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o rejestrację w innym terminie!</span>';
-			echo '<br />Informacja developerska: '.$e;
-		}
-	
+						
 	}
 
 
@@ -150,7 +128,7 @@
 										  <?php
 											if (isset($_SESSION['e_email']))
 											{
-												echo '<div class="row justify-content-center error">'.$_SESSION['e_email'].'</div>';
+												echo '<br/><div class="error">'.$_SESSION['e_email'].'</div><br/>';
 												unset($_SESSION['e_email']);
 											}
 										?>
