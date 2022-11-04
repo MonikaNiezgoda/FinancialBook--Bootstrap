@@ -75,3 +75,11 @@ select:focus
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
+.info
+{
+	color: FCB50F !important;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold !important;
+}

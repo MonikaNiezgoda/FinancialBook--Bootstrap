@@ -53,14 +53,12 @@
 					$query = $db->prepare("INSERT INTO users VALUES (NULL, '$imie', '$haslo_hash', :email)");
 					$query->bindValue(':email', $email, PDO::PARAM_STR);
 					$query->execute();
-				
-						$_SESSION['udanarejestracja']=true;
-						header('Location: menu_glowne.php');
+			
+						$_SESSION['udanarejestracja']="Rejestracja się powiodła, teraz możesz się zalogować.";
+						header('Location: index.php');
 				}
 						
 	}
-
-
 ?>
 
 
