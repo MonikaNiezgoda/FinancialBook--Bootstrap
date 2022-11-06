@@ -1,3 +1,32 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['logged_id'])){
+	header('Location: index.php');
+	exit();	
+} else{
+	
+	if(isset($_POST['kwota'])){
+		
+		require_once 'database.php';
+		
+		$userId=$_SESSION["logged_id"];
+		$category="1";
+		$amount = $_POST["kwota"];
+		$date = $_POST["data"];
+		$comment ="blabla";
+		
+		$dodajPrzychod = $db ->exec("INSERT INTO incomes VALUES (NULL , '$userId', '$category', '$amount', '$date', '$comment' )");
+		//$dodajPrzychod->execute();
+
+	} 
+	
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -35,7 +64,7 @@
 			  <div class="collapse navbar-collapse" id="navbarToggler">
 				<ul class="navbar-nav mr-auto ml-3  mt-lg-0">
 				  <li class="nav-item ">
-					<a class="nav-link" href="menu_glowne.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+					<a class="nav-link" href="menu_glowne.php"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
 						<path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
 						<path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
 					</svg> Strona Główna 
@@ -84,10 +113,11 @@
 						<div class="row justify-content-center mb-2 mt-2">
 						<h3> Dodawanie przychodu</h3>
 						</div>
+						<form method="post" action="dodaj_przychod.php">
 						<div class="row justify-content-center">
 							<div class=" col-8  col-md-6">
 								<div class="input-group mb-3">
-								  <input type="number" class="form-control input-sm " min="0.01" value="0.01" step="0.01" id="kwota" >
+								  <input type="number" class="form-control input-sm " min="0.01" value="0.01" step="0.01" id="kwota"  name="kwota" required>
 									  <div class="input-group-append">
 										<span class="input-group-text">PLN</span>
 									  </div>
@@ -97,7 +127,7 @@
 						<div class="row justify-content-center">
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3 inline-block">
-								  <input type="date" class="form-control input-sm  "  id="data"  min="1990-01-01">
+								  <input type="date" class="form-control input-sm  "  id="data"  min="1990-01-01" name="data" required>
 									  
 								</div>
 							</div>
@@ -105,7 +135,7 @@
 						<div class="row justify-content-center">
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3">
-										  <select class="custom-select" size="3" id="kategoria">
+										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
 											<option selected>Wynagrodzenie</option>
 												<option value="1">Odsetki bankowe</option>
 												<option value="2">Sprzedaż na allegro</option>
@@ -118,7 +148,7 @@
 					<div class="row justify-content-center">
 						<div class="col-8  col-md-6">
 							<div class="input-group mb-3">
-								<textarea class="form-control " rows="3" id="komentarz" placeholder="Komentarz (opcjonalnie)"></textarea>	
+								<textarea class="form-control " rows="3" id="komentarz" placeholder="Komentarz (opcjonalnie)" name="komentarz"></textarea>	
 							</div>
 						</div>
 					</div>
@@ -132,9 +162,10 @@
 				
 							
 							<div class="col-4  col-md-3">
-							  <a  class="btn btn-secondary btn-md btn-block" href="menu_glowne.html" role="button">Anuluj</a>
+							  <a  class="btn btn-secondary btn-md btn-block" href="menu_glowne.php" role="button">Anuluj</a>
 							</div>
 					</div>
+					
 					
 					<!-- Modal -->
 					<div class="modal fade" id="modal" tabindex="-1" data-backdrop="static" data-keyboard="false"aria-labelledby="modalLabel" aria-hidden="true">
@@ -150,13 +181,13 @@
 							Czy na pewno chcesz dodać przychód?
 						  </div>
 						  <div class="modal-footer">
-							 <a  class="btn btn-primary btn-md" href="dodaj_przychod.html"role="button">Tak</a>
+							 <input type="submit"  class="btn btn-primary btn-md" value="Tak">
 							<button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Nie</button>
 						  </div>
 						</div>
 					  </div>
 					</div>
-					
+					</form>
 
 				</div>
 			</main>
