@@ -1,6 +1,9 @@
 <?php
 session_start();
-
+if (isset($_SESSION['logged_id'])) {
+	header('Location: list.php');
+	exit();
+}
 ?>
 
 
@@ -78,7 +81,10 @@ session_start();
 								<div class="col-4  col-md-3">
 								  <a  class="btn btn-secondary btn-md btn-block" href="index.php" role="button">Anuluj</a>
 								</div>
-									<?php
+								
+						</div>
+						<div class=" row justify-content-center error">
+						<?php
 									if (isset($_SESSION['bad_attempt'])) {
 										echo '<p>Niepoprawny login lub hasło!</p>';
 										unset($_SESSION['bad_attempt']);
@@ -86,6 +92,7 @@ session_start();
 									?>
 						</div>
 					</form>
+						
 				</div>
 				
 				</main>
