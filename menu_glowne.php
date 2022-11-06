@@ -17,8 +17,8 @@ if(!isset($_SESSION['logged_id'])){
 		if($user && password_verify($haslo, $user['password'])){
 			$_SESSION['logged_id'] = $user['id'];
 			$_SESSION['imie'] = $user['username'];
-			//$_SESSION['imie'] = $user['username'];
 			unset($_SESSION['bad_attempt']);
+			
 		} else {
 			$_SESSION['bad_attempt'] = true;
 			header('Location: logowanie.php');

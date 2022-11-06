@@ -53,7 +53,26 @@
 					$query = $db->prepare("INSERT INTO users VALUES (NULL, '$imie', '$haslo_hash', :email)");
 					$query->bindValue(':email', $email, PDO::PARAM_STR);
 					$query->execute();
-			
+					
+					//dodanie kategorii przychodow defaultowych do tabeli z przypisanymi do usera
+					
+					$incomesQuery  = $db->query('SELECT * FROM incomes_category_default');
+					$incomesCategory = $incomesQuery->fetchAll();
+					
+					$userQuery = $db->prepare('SELECT id FROM users WHERE email = :email');
+					$userQuery->bindValue(':email', $email, PDO::PARAM_STR);
+					$userQuery->execute();
+					
+					$user = $userQuery->fetch();
+	
+					$userId=$user['id'];
+					//$categoryName=$incomesCategory['name'];
+					
+					foreach($incomesCategory as $incomesCategory) {
+					$categoryName=$incomesCategory['name'];
+					$userIncomes= $db->exec("INSERT INTO incomes_category_assigned_to_users VALUES ('NULL', '$userId', '$categoryName')");
+					}
+					
 						$_SESSION['udanarejestracja']="Rejestracja się powiodła, teraz możesz się zalogować.";
 						header('Location: index.php');
 				}
