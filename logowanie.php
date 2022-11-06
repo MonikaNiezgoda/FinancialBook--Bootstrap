@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -39,14 +45,14 @@
 						<div class="row justify-content-center mb-2 mt-2">
 						<h3> Logowanie </h3>
 						</div>
-						
+						<form method="post" action="menu_glowne.php">
 						<div class="row justify-content-center">
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3">
 										  <div class="input-group-prepend">
 											<span class="input-group-text" id="basic-addon">@</span>
 										  </div>
-										  <input type="email" class="form-control" placeholder="Email" aria-label="UserEmail" aria-describedby="basic-addon">
+										  <input type="email" class="form-control" placeholder="Email" aria-label="UserEmail" aria-describedby="basic-addon" name="email">
 								</div>
 							</div>
 						</div>
@@ -58,7 +64,7 @@
 												  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
 												</svg></span>
 										  </div>
-										  <input type="password" class="form-control" placeholder="Hasło" aria-label="UserPassword" aria-describedby="basic-addon">
+										  <input type="password" class="form-control" placeholder="Hasło" aria-label="UserPassword" aria-describedby="basic-addon" name="haslo">
 								</div>
 							 </div>
 						</div>
@@ -66,18 +72,22 @@
 						<div class="row justify-content-center">
 			
 								<div class="col-4  col-md-3">
-								 <a class="btn btn-success btn-md btn-block" href="menu_glowne.html" role="button">
-									  Zaloguj się
-									</a>
+								 <input type="submit" value="Zaloguj się" class="btn btn-success btn-md btn-block">
 								</div>
 		
 								<div class="col-4  col-md-3">
-								  <a  class="btn btn-secondary btn-md btn-block" href="index.html" role="button">Anuluj</a>
+								  <a  class="btn btn-secondary btn-md btn-block" href="index.php" role="button">Anuluj</a>
 								</div>
+									<?php
+									if (isset($_SESSION['bad_attempt'])) {
+										echo '<p>Niepoprawny login lub hasło!</p>';
+										unset($_SESSION['bad_attempt']);
+									}
+									?>
 						</div>
-					
+					</form>
+				</div>
 				
-					</div>
 				</main>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			
