@@ -14,7 +14,7 @@ if(!isset($_SESSION['logged_id'])){
 	
 	$user = $userQuery->fetch();
 	
-		if($user && password_verify($password, $user['password'])){
+		if($user && password_verify($haslo, $user['password'])){
 			$_SESSION['logged_id'] = $user['id'];
 			unset($_SESSION['bad_attempt']);
 		} else {

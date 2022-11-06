@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['logged_id'])) {
-	header('Location: list.php');
+	header('Location: menu_glowne.php');
 	exit();
 }
 ?>
