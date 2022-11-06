@@ -8,7 +8,7 @@ if(!isset($_SESSION['logged_id'])){
 	$email = filter_input(INPUT_POST, 'email');
 	$haslo = filter_input(INPUT_POST, 'haslo');
 	
-	$userQuery = $db->prepare('SELECT id, password FROM users WHERE email = :email');
+	$userQuery = $db->prepare('SELECT id, password,username FROM users WHERE email = :email');
 	$userQuery->bindValue(':email', $email, PDO::PARAM_STR);
 	$userQuery->execute();
 	
@@ -16,6 +16,8 @@ if(!isset($_SESSION['logged_id'])){
 	
 		if($user && password_verify($haslo, $user['password'])){
 			$_SESSION['logged_id'] = $user['id'];
+			$_SESSION['imie'] = $user['username'];
+			//$_SESSION['imie'] = $user['username'];
 			unset($_SESSION['bad_attempt']);
 		} else {
 			$_SESSION['bad_attempt'] = true;
@@ -103,7 +105,7 @@ if(!isset($_SESSION['logged_id'])){
 									  </li>
 				</ul>
 					  <span class="navbar-text">
-						Witaj [imię]!
+						Witaj <?php echo $_SESSION['imie']?> !
 					  </span>
 
 			  </div>
