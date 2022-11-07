@@ -54,11 +54,6 @@
 					$query->bindValue(':email', $email, PDO::PARAM_STR);
 					$query->execute();
 					
-					//dodanie kategorii przychodow defaultowych do tabeli z przypisanymi do usera
-					
-					$incomesQuery  = $db->query('SELECT * FROM incomes_category_default');
-					$incomesCategory = $incomesQuery->fetchAll();
-					
 					$userQuery = $db->prepare('SELECT id FROM users WHERE email = :email');
 					$userQuery->bindValue(':email', $email, PDO::PARAM_STR);
 					$userQuery->execute();
@@ -66,11 +61,23 @@
 					$user = $userQuery->fetch();
 	
 					$userId=$user['id'];
-					//$categoryName=$incomesCategory['name'];
+					
+					//dodanie kategorii przychodow defaultowych do tabeli z przypisanymi do usera
+					$incomesQuery  = $db->query('SELECT * FROM incomes_category_default');
+					$incomesCategory = $incomesQuery->fetchAll();
 					
 					foreach($incomesCategory as $incomesCategory) {
 					$categoryName=$incomesCategory['name'];
 					$userIncomes= $db->exec("INSERT INTO incomes_category_assigned_to_users VALUES ('NULL', '$userId', '$categoryName')");
+					}
+					
+					//dodanie kategorii wydatków defaultowych do tabeli z przypisanymi do usera
+					$expensesQuery  = $db->query('SELECT * FROM expenses_category_default');
+					$expensesCategory = $expensesQuery->fetchAll();
+					
+					foreach($expensesCategory as $expensesCategory) {
+					$categoryExpenseName=$expensesCategory['name'];
+					$userExpenses= $db->exec("INSERT INTO expenses_category_assigned_to_users VALUES ('NULL', '$userId', '$categoryExpenseName')");
 					}
 					
 						$_SESSION['udanarejestracja']="Rejestracja się powiodła, teraz możesz się zalogować.";

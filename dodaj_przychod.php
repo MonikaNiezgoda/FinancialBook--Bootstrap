@@ -11,7 +11,7 @@ if(!isset($_SESSION['logged_id'])){
 		require_once 'database.php';
 		
 		$userId=$_SESSION["logged_id"];
-		$category="1";
+		$category=$_POST['kategoria'];
 		$amount = $_POST["kwota"];
 		$date = $_POST["data"];
 		$comment ="blabla";
