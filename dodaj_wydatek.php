@@ -1,3 +1,8 @@
+<?php
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -95,10 +100,11 @@
 						<div class="row justify-content-center mb-2 mt-2">
 						<h3> Dodawanie wydatku</h3>
 						</div>
+						<form method="post" action="dodaj_wydatek.php">
 						<div class="row justify-content-center">
 							<div class=" col-md-6 col-8 ">
 								<div class="input-group mb-3">
-								  <input type="number" class="form-control input-sm " min="0.01" value="0.01" step="0.01" id="kwota" >
+								  <input type="number" class="form-control input-sm " min="0.01" value="0.01" step="0.01" id="kwota" name="kwota" required>
 									  <div class="input-group-append">
 										<span class="input-group-text">PLN</span>
 									  </div>
@@ -108,14 +114,14 @@
 						<div class="row justify-content-center">
 							<div class="col-md-6 col-8 ">
 								<div class="input-group mb-3 inline-block">
-								  <input type="date" class="form-control input-sm"  id="data"  min="1990-01-01" onload="ustawDate();"> 
+								  <input type="date" class="form-control input-sm"  id="data"  min="1990-01-01" onload="ustawDate();" name="data" required> 
 								</div>
 							</div>
 						</div>
 						<div class="row justify-content-center">
 							<div class="col-md-6 col-8">
 								<div class="input-group mb-3">
-										  <select class="custom-select" size="3" id="kategoria">
+										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
 											<option selected>Jedzenie</option>
 												<option value="1">Mieszkanie</option>
 												<option value="2">Transport</option>
@@ -141,7 +147,7 @@
 					<div class="row justify-content-center">
 						<div class=" col-8  col-md-6">
 							<div class="input-group mb-3">
-								<textarea class="form-control " rows="3" id="komentarz" placeholder="Komentarz (opcjonalnie)"></textarea>	
+								<textarea class="form-control " rows="3" id="komentarz" placeholder="Komentarz (opcjonalnie)" name="komentarz"></textarea>	
 							</div>
 						</div>
 					</div>
@@ -172,13 +178,13 @@
 							Czy na pewno chcesz dodać wydatek?
 						  </div>
 						  <div class="modal-footer">
-							 <a  class="btn btn-primary btn-md" href="dodaj_wydatek.html"role="button">Tak</a>
+							  <input type="submit"  class="btn btn-primary btn-md" value="Tak">
 							<button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Nie</button>
 						  </div>
 						</div>
 					  </div>
 					</div>
-								
+					</form>		
 
 				</div>
 			</main>
