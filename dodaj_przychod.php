@@ -14,7 +14,7 @@ if(!isset($_SESSION['logged_id'])){
 		$category=$_POST['kategoria'];
 		$amount = $_POST["kwota"];
 		$date = $_POST["data"];
-		$comment ="blabla";
+		$comment =$_POST["komentarz"];
 		
 		$dodajPrzychod = $db ->exec("INSERT INTO incomes VALUES (NULL , '$userId', '$category', '$amount', '$date', '$comment' )");
 		//$dodajPrzychod->execute();

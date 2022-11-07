@@ -15,10 +15,9 @@ if(!isset($_SESSION['logged_id'])){
 		$paymentMethod="1";
 		$amount = $_POST["kwota"];
 		$date = $_POST["data"];
-		$comment ="lala";
+		$comment =$_POST["komentarz"];
 		
 		$dodajWydatek = $db ->exec("INSERT INTO expenses VALUES (NULL , '$userId', '$category', '$paymentMethod', '$amount', '$date', '$comment' )");
-		//$dodajPrzychod->execute();
 
 	} 
 	
