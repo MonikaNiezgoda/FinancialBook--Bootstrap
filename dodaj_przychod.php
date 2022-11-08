@@ -17,13 +17,7 @@ if(!isset($_SESSION['logged_id'])){
 		$comment =$_POST["komentarz"];
 		
 		$dodajPrzychod = $db ->exec("INSERT INTO incomes VALUES (NULL , '$userId', '$category', '$amount', '$date', '$comment' )");
-<<<<<<< HEAD
-		//$dodajPrzychod->execute();
-		
-		
-=======
 
->>>>>>> feature_dodanie_wydatku
 	} 
 	
 }
@@ -142,24 +136,13 @@ if(!isset($_SESSION['logged_id'])){
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3">
 										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
-<<<<<<< HEAD
-											<!--<option selected>Wynagrodzenie</option>
-												<option value="1">Odsetki bankowe</option>
-												<option value="2">Sprzedaż na allegro</option>
-												<option value="3">Inne</option>-->
+
 												<?php
 													foreach($incomesCat as $incomesCategory){
 													echo "<option value={$incomesCategory['id']}>{$incomesCategory['name']} </option>";
 													}
 												?>
-												
-												
-=======
-											<option value="1" selected>Wynagrodzenie</option>
-												<option value="2">Odsetki bankowe</option>
-												<option value="3">Sprzedaż na allegro</option>
-												<option value="4">Inne</option>
->>>>>>> feature_dodanie_wydatku
+								
 										  </select> 
 								</div>
 							 </div>

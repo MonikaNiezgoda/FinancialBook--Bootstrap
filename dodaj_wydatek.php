@@ -1,5 +1,8 @@
 <?php
-session_start();
+		session_start();
+		require_once 'database.php';
+		
+		$userId=$_SESSION["logged_id"];
 
 if(!isset($_SESSION['logged_id'])){
 	header('Location: index.php');
@@ -8,9 +11,6 @@ if(!isset($_SESSION['logged_id'])){
 	
 	if(isset($_POST['kwota'])){
 		
-		require_once 'database.php';
-		
-		$userId=$_SESSION["logged_id"];
 		$category=$_POST["kategoria"];
 		$paymentMethod="1";
 		$amount = $_POST["kwota"];
@@ -20,6 +20,9 @@ if(!isset($_SESSION['logged_id'])){
 		$dodajWydatek = $db ->exec("INSERT INTO expenses VALUES (NULL , '$userId', '$category', '$paymentMethod', '$amount', '$date', '$comment' )");
 	} 
 }
+
+		$userExpenses = $db ->query("SELECT id, name FROM `expenses_category_assigned_to_users` WHERE user_id='$userId'");	
+		$expensesCat = $userExpenses->fetchAll();
 
 ?>
 
@@ -142,7 +145,7 @@ if(!isset($_SESSION['logged_id'])){
 							<div class="col-md-6 col-8">
 								<div class="input-group mb-3">
 										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
-											<option value="1" selected>Jedzenie</option>
+											<!--<option value="1" selected>Jedzenie</option>
 												<option value="2">Mieszkanie</option>
 												<option value="3">Transport</option>
 												<option value="4">Telekomunikacja</option>
@@ -158,7 +161,12 @@ if(!isset($_SESSION['logged_id'])){
 												<option value="14">Na złotą jesień, czyli emeryturę</option>
 												<option value="15">Spłata długów</option>
 												<option value="16">Darowizna</option>
-												<option value="17">Inne wydatki</option>
+												<option value="17">Inne wydatki</option>-->
+												<?php
+													foreach($expensesCat as $expensesCat){
+													echo "<option value={$expensesCat['id']}>{$expensesCat['name']} </option>";
+													}
+												?>
 										  </select> 
 								</div>
 							 </div>
