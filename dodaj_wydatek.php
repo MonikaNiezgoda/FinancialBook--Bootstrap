@@ -18,9 +18,7 @@ if(!isset($_SESSION['logged_id'])){
 		$comment =$_POST["komentarz"];
 		
 		$dodajWydatek = $db ->exec("INSERT INTO expenses VALUES (NULL , '$userId', '$category', '$paymentMethod', '$amount', '$date', '$comment' )");
-
 	} 
-	
 }
 
 ?>
