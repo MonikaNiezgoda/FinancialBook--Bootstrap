@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once 'database.php';
+$userId=$_SESSION["logged_id"];
 
 if(!isset($_SESSION['logged_id'])){
 	header('Location: index.php');
@@ -7,10 +9,8 @@ if(!isset($_SESSION['logged_id'])){
 } else{
 	
 	if(isset($_POST['kwota'])){
+
 		
-		require_once 'database.php';
-		
-		$userId=$_SESSION["logged_id"];
 		$category=$_POST['kategoria'];
 		$amount = $_POST["kwota"];
 		$date = $_POST["data"];
@@ -18,10 +18,14 @@ if(!isset($_SESSION['logged_id'])){
 		
 		$dodajPrzychod = $db ->exec("INSERT INTO incomes VALUES (NULL , '$userId', '$category', '$amount', '$date', '$comment' )");
 		//$dodajPrzychod->execute();
-
+		
+		
 	} 
 	
 }
+		$userIncomes = $db ->query("SELECT id, name FROM `incomes_category_assigned_to_users` WHERE user_id='$userId'");	
+		$incomesCat = $userIncomes->fetchAll();
+
 
 ?>
 
@@ -136,10 +140,17 @@ if(!isset($_SESSION['logged_id'])){
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3">
 										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
-											<option selected>Wynagrodzenie</option>
+											<!--<option selected>Wynagrodzenie</option>
 												<option value="1">Odsetki bankowe</option>
 												<option value="2">Sprzedaż na allegro</option>
-												<option value="3">Inne</option>
+												<option value="3">Inne</option>-->
+												<?php
+													foreach($incomesCat as $incomesCategory){
+													echo "<option value={$incomesCategory['id']}>{$incomesCategory['name']} </option>";
+													}
+												?>
+												
+												
 										  </select> 
 								</div>
 							 </div>
