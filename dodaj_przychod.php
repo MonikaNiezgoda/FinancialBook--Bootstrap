@@ -14,12 +14,16 @@ if(!isset($_SESSION['logged_id'])){
 		$category=$_POST['kategoria'];
 		$amount = $_POST["kwota"];
 		$date = $_POST["data"];
-		$comment ="blabla";
+		$comment =$_POST["komentarz"];
 		
 		$dodajPrzychod = $db ->exec("INSERT INTO incomes VALUES (NULL , '$userId', '$category', '$amount', '$date', '$comment' )");
+<<<<<<< HEAD
 		//$dodajPrzychod->execute();
 		
 		
+=======
+
+>>>>>>> feature_dodanie_wydatku
 	} 
 	
 }
@@ -28,8 +32,6 @@ if(!isset($_SESSION['logged_id'])){
 
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pl">
@@ -83,7 +85,7 @@ if(!isset($_SESSION['logged_id'])){
 					</svg> Dodaj przychód <span class="sr-only">(current)</span> </a>
 				  </li>
 				  <li class="nav-item">
-					<a class="nav-link " href="dodaj_wydatek.html"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 16">
+					<a class="nav-link " href="dodaj_wydatek.php"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 16">
 					  <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
 					</svg> Dodaj wydatek</a>
 				  </li>
@@ -140,6 +142,7 @@ if(!isset($_SESSION['logged_id'])){
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3">
 										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
+<<<<<<< HEAD
 											<!--<option selected>Wynagrodzenie</option>
 												<option value="1">Odsetki bankowe</option>
 												<option value="2">Sprzedaż na allegro</option>
@@ -151,6 +154,12 @@ if(!isset($_SESSION['logged_id'])){
 												?>
 												
 												
+=======
+											<option value="1" selected>Wynagrodzenie</option>
+												<option value="2">Odsetki bankowe</option>
+												<option value="3">Sprzedaż na allegro</option>
+												<option value="4">Inne</option>
+>>>>>>> feature_dodanie_wydatku
 										  </select> 
 								</div>
 							 </div>
