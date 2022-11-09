@@ -22,6 +22,11 @@
 		$userExpenses = $db->query($sql);
 		$expenses = $userExpenses -> fetchAll();
 	}
+	
+	//ustawienie daty
+	$data = new DateTime();
+	$data->format('Y-m-d');
+	
 
 
 ?>
@@ -113,14 +118,14 @@
 							</div>
 							<div class="col-md-4">	
 								<div class="dropdown">
-									  <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+									  <button class=" dropdown-toggle btn btn-warning" type="button" data-toggle="dropdown" aria-expanded="false">
 										Wybierz zakres dat
 									  </button>
 									  <div class="dropdown-menu">
-										<a class="dropdown-item"  data-toggle="collapse" href="#collapse1" aria-expanded="false" aria-controls="collapse">Bieżący miesiąc</a>
-										<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
+										<button class="dropdown-item btn btn-warning" type="button"  data-toggle="collapse"  aria-expanded="false" aria-controls="collapse"  data-target="#collapse1">Bieżący miesiąc</button>
+									<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
 										<a class="dropdown-item" href="#">Bieżący rok</a>
-										<a class="dropdown-item" href="#">Niestandardowy</a>
+										<a class="dropdown-item" href="#">Niestandardowy</a>-->
 									  </div>
 								</div>
 							</div>
@@ -167,74 +172,6 @@
 													}
 												?>
 											
-												<!--<tr>
-													<td>Jedzenie</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Mieszkanie</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Transport</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Telekomunikacja</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Opieka zdrowotna</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Ubranie</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Higiena</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Dzieci</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Rozrywka</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Wycieczka</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Szkolenia</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Książki</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Oszczędności</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Na złotą jesień, czyli emeryturę</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Spłata długów</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Darowizna</td>
-													<td> </td>
-												</tr>
-												<tr>
-													<td>Inne wydatki</td>
-													<td> </td>
-												</tr>-->
 											</tbody>
 										</thead>
 									</table>
@@ -250,9 +187,7 @@
 										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										  </button>
-
 										</div>
-	
 						</div>		
 					</div>	
 				</main>
