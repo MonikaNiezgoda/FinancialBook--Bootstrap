@@ -10,8 +10,8 @@
 	exit();
 	} else{
 		
-		$sql = "SELECT sum(amount) as suma, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
-		WHERE incomes.user_id=$userId
+		$sql = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
+		WHERE incomes.user_id='$userId'
 		GROUP BY name";
 		$userIncomes = $db->query($sql);
 		$incomes = $userIncomes -> fetchAll();
@@ -133,7 +133,13 @@
 													<th scope="col">Suma</th>
 												</tr>
 												<tbody>
-													<tr>
+												<?php
+													foreach($incomes as $incomes){
+													echo "<tr><td>{$incomes['name']} </td>  <td>{$incomes['sum']}</td></tr>";
+													}
+												?>
+												
+													<!--<tr>
 														<td>Wynagrodzenie</td>
 														<td> </td>
 													</tr>
@@ -148,15 +154,12 @@
 													<tr>
 														<td>Inne</td>
 														<td> </td>
-													</tr>
+													</tr>-->
 												</tbody>
 											</thead>
 										</table>	
-										
-										
-										
-
 									</div>
+								
 								
 								<div class="col-md-6 my-2">
 									<table class="table table-bordered table-hover">
