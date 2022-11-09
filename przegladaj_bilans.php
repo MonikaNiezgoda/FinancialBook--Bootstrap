@@ -1,9 +1,20 @@
 <?php
 	session_start();
 	
+	require_once 'database.php';
+		
+	$userId=$_SESSION["logged_id"];
+	
 	if(!isset($_SESSION['logged_id'])){
 	header('Location: index.php');
 	exit();
+	} else{
+		
+		$sql = "SELECT sum(amount) as suma, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
+		WHERE incomes.user_id=$userId
+		GROUP BY name";
+		$userIncomes = $db->query($sql);
+		$incomes = $userIncomes -> fetchAll();
 	}
 
 
