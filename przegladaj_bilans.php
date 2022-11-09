@@ -15,6 +15,12 @@
 		GROUP BY name";
 		$userIncomes = $db->query($sql);
 		$incomes = $userIncomes -> fetchAll();
+		
+		$sql = "SELECT sum(amount) as sum, name FROM expenses JOIN expenses_category_assigned_to_users as category ON expenses.expense_category_assigned_to_user_id = category.id  
+		WHERE expenses.user_id='$userId'
+		GROUP BY name";
+		$userExpenses = $db->query($sql);
+		$expenses = $userExpenses -> fetchAll();
 	}
 
 
@@ -138,23 +144,6 @@
 													echo "<tr><td>{$incomes['name']} </td>  <td>{$incomes['sum']}</td></tr>";
 													}
 												?>
-												
-													<!--<tr>
-														<td>Wynagrodzenie</td>
-														<td> </td>
-													</tr>
-													<tr>
-														<td>Odsetki bankowe</td>
-														<td> </td>
-													</tr>
-													<tr>
-														<td>Sprzedaż na allegro</td>
-														<td> </td>
-													</tr>
-													<tr>
-														<td>Inne</td>
-														<td> </td>
-													</tr>-->
 												</tbody>
 											</thead>
 										</table>	
@@ -172,7 +161,13 @@
 												<th scope="col">Suma</th>
 											</tr>
 											<tbody>
-												<tr>
+												<?php
+													foreach($expenses as $expenses){
+													echo "<tr><td>{$expenses['name']} </td>  <td>{$expenses['sum']}</td></tr>";
+													}
+												?>
+											
+												<!--<tr>
 													<td>Jedzenie</td>
 													<td> </td>
 												</tr>
@@ -239,7 +234,7 @@
 												<tr>
 													<td>Inne wydatki</td>
 													<td> </td>
-												</tr>
+												</tr>-->
 											</tbody>
 										</thead>
 									</table>
