@@ -21,14 +21,15 @@
 		GROUP BY name";
 		$userExpenses = $db->query($sql);
 		$expenses = $userExpenses -> fetchAll();
+		
 	}
-	
+		
 	//ustawienie daty
 	$data = new DateTime();
 	$data->format('Y-m-d');
 	
 
-
+		
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -122,7 +123,9 @@
 										Wybierz zakres dat
 									  </button>
 									  <div class="dropdown-menu">
-										<button class="dropdown-item btn btn-warning" type="button"  data-toggle="collapse"  aria-expanded="false" aria-controls="collapse"  data-target="#collapse1">Bieżący miesiąc</button>
+									 
+										<button class="dropdown-item btn btn-warning" type="submit"  data-toggle="collapse"  aria-expanded="false" aria-controls="collapse"  data-target="#collapse1" name="currentMonth">Bieżący miesiąc</button>
+										
 									<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
 										<a class="dropdown-item" href="#">Bieżący rok</a>
 										<a class="dropdown-item" href="#">Niestandardowy</a>-->

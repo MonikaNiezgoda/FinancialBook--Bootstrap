@@ -23,6 +23,11 @@ if(!isset($_SESSION['logged_id'])){
 
 		$userExpenses = $db ->query("SELECT id, name FROM `expenses_category_assigned_to_users` WHERE user_id='$userId'");	
 		$expensesCat = $userExpenses->fetchAll();
+		//ustawienie dzisiejszej daty
+	$data = new DateTime();
+	$today = $data->format('Y-m-d');
+	//echo $today;
+	
 
 ?>
 
@@ -47,7 +52,7 @@ if(!isset($_SESSION['logged_id'])){
 	<!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<![endif]-->
-	<script type="text/javascript">
+<!--	<script type="text/javascript">
 	function ustawDate()
 	{
 		var  dzisiaj = new Date();
@@ -59,10 +64,10 @@ if(!isset($_SESSION['logged_id'])){
 		document.getElementById("data").setAttribute('value',dzisiejszaData);
 	}
 	
-	</script>
+	</script>-->
 </head>
 
-<body onload="ustawDate();">
+<body>
 		<header>
 				<h1 class="display-5 h-5 text-center my-2"> Twój budżet</h1>
 				
@@ -137,7 +142,7 @@ if(!isset($_SESSION['logged_id'])){
 						<div class="row justify-content-center">
 							<div class="col-md-6 col-8 ">
 								<div class="input-group mb-3 inline-block">
-								  <input type="date" class="form-control input-sm"  id="data"  min="1990-01-01" onload="ustawDate();" name="data" required> 
+								  <input type="date" class="form-control input-sm"   min="1990-01-01" value="$today" name="data" required> 
 								</div>
 							</div>
 						</div>

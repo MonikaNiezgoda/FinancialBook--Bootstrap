@@ -68,7 +68,7 @@
 					
 					foreach($incomesCategory as $incomesCategory) {
 					$categoryName=$incomesCategory['name'];
-					$userIncomes= $db->exec("INSERT INTO incomes_category_assigned_to_users VALUES ('NULL', '$userId', '$categoryName')");
+					$userIncomes= $db->exec("INSERT INTO incomes_category_assigned_to_users VALUES (NULL, '$userId', '$categoryName')");
 					}
 					
 					//dodanie kategorii wydatków defaultowych do tabeli z przypisanymi do usera
@@ -77,7 +77,7 @@
 					
 					foreach($expensesCategory as $expensesCategory) {
 					$categoryExpenseName=$expensesCategory['name'];
-					$userExpenses= $db->exec("INSERT INTO expenses_category_assigned_to_users VALUES ('NULL', '$userId', '$categoryExpenseName')");
+					$userExpenses= $db->exec("INSERT INTO expenses_category_assigned_to_users VALUES (NULL, '$userId', '$categoryExpenseName')");
 					}
 					
 						$_SESSION['udanarejestracja']="Rejestracja się powiodła, teraz możesz się zalogować.";
