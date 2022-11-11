@@ -149,7 +149,7 @@ if(!isset($_SESSION['logged_id'])){
 						<div class="row justify-content-center">
 							<div class="col-md-6 col-8">
 								<div class="input-group mb-3">
-										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
+										  <select class="form-control" id="kategoria" name="kategoria" required>
 												<?php
 													foreach($expensesCat as $expensesCat){
 													echo "<option value={$expensesCat['id']}>{$expensesCat['name']} </option>";

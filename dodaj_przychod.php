@@ -135,7 +135,7 @@ if(!isset($_SESSION['logged_id'])){
 						<div class="row justify-content-center">
 							<div class="col-8  col-md-6">
 								<div class="input-group mb-3">
-										  <select class="custom-select" size="3" id="kategoria" name="kategoria" required>
+										  <select class="form-control"  id="kategoria" name="kategoria" required>
 
 												<?php
 													foreach($incomesCat as $incomesCategory){
