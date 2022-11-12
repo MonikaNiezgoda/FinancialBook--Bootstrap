@@ -1,4 +1,5 @@
-<?php
+
+		<?php
 	session_start();
 	
 	require_once 'database.php';
@@ -9,21 +10,28 @@
 	header('Location: index.php');
 	exit();
 	} else{
-		
-		if(isset($_SESSION['biezacy_miesiac']))
+
+		if(isset($_POST['currentYear']))
+			
 		{
+			//ustawienie pierwszego i ostatniego dnia bieżącego roku
+		$dataod=  date('Y-m-d ', mktime(0,0,0,1,1,date('Y')));
+		$datado= date('Y-m-d', mktime(23,59,59,13,0,date('Y')));
+		
 			$sql = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
-		WHERE incomes.user_id='$userId'
+		WHERE incomes.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
 		GROUP BY name";
 		$userIncomes = $db->query($sql);
 		$incomes = $userIncomes -> fetchAll();
 		
 		$sql = "SELECT sum(amount) as sum, name FROM expenses JOIN expenses_category_assigned_to_users as category ON expenses.expense_category_assigned_to_user_id = category.id  
-		WHERE expenses.user_id='$userId'
+		WHERE expenses.user_id='$userId' AND date_of_expense BETWEEN '$dataod' AND '$datado'
 		GROUP BY name";
 		$userExpenses = $db->query($sql);
 		$expenses = $userExpenses -> fetchAll();
-
+	} else{
+		header('Location: przegladaj_bilans.php');
+	exit();
 	}
 	}
 
@@ -114,37 +122,101 @@
 							<div class= "col-md-4">
 								<h3> Przeglądanie bilansu</h3>
 							</div>
-						<div class="col-md-4">	
+							<div class="col-md-4">	
 							
-						<div class="dropdown">
+								<div class="dropdown">
 									  <button class=" dropdown-toggle btn btn-warning" type="button" data-toggle="dropdown" aria-expanded="false">
 										Wybierz zakres dat
 									  </button>
 									   
-								<div class="dropdown-menu">
-										<form method="post" action="biezacy_miesiac.php">
+										  <div class="dropdown-menu">
+											<form method="post" action="biezacy_miesiac.php">
 											<input class="dropdown-item btn btn-warning" type="submit"   name="currentMonth" value="Bieżący miesiąc">
-										 </form>
-										 <form method="post" action="poprzedni_miesiac.php">
+											</form>
+											<form method="post" action="poprzedni_miesiac.php">
 											<input class="dropdown-item btn btn-warning" type="submit"   name="previousMonth" value="Poprzedni miesiąc">
 										</form>
 										<form method="post" action="biezacy_rok.php">
 											<input class="dropdown-item btn btn-warning" type="submit"   name="currentYear" value="Bieżący rok">
 										</form>
+										<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
+											<a class="dropdown-item" href="#">Bieżący rok</a>
+											<a class="dropdown-item" href="#">Niestandardowy</a>-->
+										  </div>
+									  
+								</div>
 								
-											<button class="dropdown-item btn btn-warning" type="button"   name="choosenDates"  data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">Niestandardowy</button>				 
-									</div>
+								
 							</div>
 						</div>
-						
-					</div>
-													<div class="row collapse  justify-content-center mb-2 mt-2" id="collapse">
-												<div class="card card-body col-md-4">
-													Tutaj ustawienie dat
-											</div>
+					
+							<div class="row">
+									<div class="col-md-6 my-2">
+										<table class="table table-bordered table-hover">
+											<thead>
+												<tr>
+												<th colspan="2" class="text-center"> Przychody z bieżącego miesiąca</th>
+												</tr>
+												<tr>
+													<th scope="col">Kategoria</th>
+													<th scope="col">Suma</th>
+												</tr>
+												<tbody>
+												<?php
+													$sumIncomes=0.00;
+													foreach($incomes as $incomes){
+														$sumIncomes += $incomes['sum'];
+													echo "<tr><td>{$incomes['name']} </td>  <td>{$incomes['sum']}</td></tr>";
+													}
+													$sumIncomes = number_format($sumIncomes,2,'.','');
+													echo "<tr><td>RAZEM</td>  <td> $sumIncomes</td></tr>";
+												?>
+												</tbody>
+											</thead>
+										</table>	
+									</div>
+								
+								
+								<div class="col-md-6 my-2">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+											<th colspan="2" class="text-center"> Wydatki z bieżącego miesiąca</th>
+											</tr>
+											<tr>
+												<th scope="col">Kategoria</th>
+												<th scope="col">Suma</th>
+											</tr>
+											<tbody>
+												<?php
+												$sumExpenses=0;
+													foreach($expenses as $expenses){
+														$sumExpenses+=$expenses['sum'];
+													echo "<tr><td>{$expenses['name']} </td>  <td>{$expenses['sum']}</td></tr>";
+													}
+													$sumExpenses = number_format($sumExpenses,2,'.','');
+													echo "<tr><td>RAZEM</td>  <td> $sumExpenses</td></tr>";
+												?>
+											
+											</tbody>
+										</thead>
+									</table>
+								</div>
+							</div>
+							
+							<div class="d-flex justify-content-center row" >
+											<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" href="#collapseAlert" aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
 										</div>
-				</div>	
-			</main>
+										
+										<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
+										  Uważaj wpadasz w dług!
+										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										  </button>
+										</div>
+						</div>		
+					
+				</main>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

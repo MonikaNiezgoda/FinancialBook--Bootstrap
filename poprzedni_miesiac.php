@@ -127,6 +127,12 @@
 										  <div class="dropdown-menu">
 										
 											<input class="dropdown-item btn btn-warning" type="submit"   name="currentMonth" value="Bieżący miesiąc">
+											<form method="post" action="poprzedni_miesiac.php">
+											<input class="dropdown-item btn btn-warning" type="submit"   name="previousMonth" value="Poprzedni miesiąc">
+										</form>
+										<form method="post" action="biezacy_rok.php">
+											<input class="dropdown-item btn btn-warning" type="submit"   name="currentYear" value="Bieżący rok">
+										</form>
 											
 										<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
 											<a class="dropdown-item" href="#">Bieżący rok</a>
