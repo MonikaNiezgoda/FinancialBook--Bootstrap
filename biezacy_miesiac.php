@@ -1,4 +1,5 @@
-<?php
+
+		<?php
 	session_start();
 	
 	require_once 'database.php';
@@ -10,7 +11,7 @@
 	exit();
 	} else{
 		
-		if(isset($_SESSION['biezacy_miesiac']))
+		if(isset($_POST['currentMonth']))
 		{
 			$sql = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
 		WHERE incomes.user_id='$userId'
@@ -23,7 +24,7 @@
 		GROUP BY name";
 		$userExpenses = $db->query($sql);
 		$expenses = $userExpenses -> fetchAll();
-
+	
 	}
 	}
 
@@ -84,7 +85,7 @@
 					</svg> Dodaj wydatek</a>
 				  </li>
 				  <li class="nav-item active">
-					<a class="nav-link " href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+					<a class="nav-link " href="przegladaj_bilans.php"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
 						  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
 					</svg> Przeglądaj bilans</a>
 				  </li>
@@ -120,7 +121,7 @@
 									  <button class=" dropdown-toggle btn btn-warning" type="button" data-toggle="dropdown" aria-expanded="false">
 										Wybierz zakres dat
 									  </button>
-									   <form method="post" action="biezacy_miesiac.php">
+									   <form method="post" action="przegladaj_bilans2.php">
 										  <div class="dropdown-menu">
 										
 											<input class="dropdown-item btn btn-warning" type="submit"  data-toggle="collapse"  aria-expanded="false" aria-controls="collapse"  data-target="#collapse1" name="currentMonth" value="Bieżący miesiąc">
@@ -137,7 +138,64 @@
 						</div>
 						
 						
-					</div>	
+							<div class="row">
+									<div class="col-md-6 my-2">
+										<table class="table table-bordered table-hover">
+											<thead>
+												<tr>
+												<th colspan="2" class="text-center"> Przychody z bieżącego miesiąca</th>
+												</tr>
+												<tr>
+													<th scope="col">Kategoria</th>
+													<th scope="col">Suma</th>
+												</tr>
+												<tbody>
+												<?php
+													foreach($incomes as $incomes){
+													echo "<tr><td>{$incomes['name']} </td>  <td>{$incomes['sum']}</td></tr>";
+													}
+												?>
+												</tbody>
+											</thead>
+										</table>	
+									</div>
+								
+								
+								<div class="col-md-6 my-2">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+											<th colspan="2" class="text-center"> Wydatki z bieżącego miesiąca</th>
+											</tr>
+											<tr>
+												<th scope="col">Kategoria</th>
+												<th scope="col">Suma</th>
+											</tr>
+											<tbody>
+												<?php
+													foreach($expenses as $expenses){
+													echo "<tr><td>{$expenses['name']} </td>  <td>{$expenses['sum']}</td></tr>";
+													}
+												?>
+											
+											</tbody>
+										</thead>
+									</table>
+								</div>
+							</div>
+							
+							<div class="d-flex justify-content-center row" >
+											<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" href="#collapseAlert" aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
+										</div>
+										
+										<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
+										  Uważaj wpadasz w dług!
+										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										  </button>
+										</div>
+						</div>		
+					
 				</main>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			
