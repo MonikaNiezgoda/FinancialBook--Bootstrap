@@ -10,17 +10,21 @@
 	header('Location: index.php');
 	exit();
 	} else{
+		//ustawienie pierwszego i ostatniego dnia bieżącego miesiąca
+		$dataod=  date('Y-m-d ', mktime(0,0,0,date('m'),1,date('Y')));
+		$datado= date('Y-m-d', mktime(23,59,59,date('m')+1,0,date('Y')));
+		
 		
 		if(isset($_POST['currentMonth']))
 		{
 			$sql = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
-		WHERE incomes.user_id='$userId'
+		WHERE incomes.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
 		GROUP BY name";
 		$userIncomes = $db->query($sql);
 		$incomes = $userIncomes -> fetchAll();
 		
 		$sql = "SELECT sum(amount) as sum, name FROM expenses JOIN expenses_category_assigned_to_users as category ON expenses.expense_category_assigned_to_user_id = category.id  
-		WHERE expenses.user_id='$userId'
+		WHERE expenses.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
 		GROUP BY name";
 		$userExpenses = $db->query($sql);
 		$expenses = $userExpenses -> fetchAll();
@@ -136,8 +140,7 @@
 								
 							</div>
 						</div>
-						
-						
+					
 							<div class="row">
 									<div class="col-md-6 my-2">
 										<table class="table table-bordered table-hover">
