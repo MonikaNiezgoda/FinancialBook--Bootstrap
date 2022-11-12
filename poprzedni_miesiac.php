@@ -10,13 +10,10 @@
 	header('Location: index.php');
 	exit();
 	} else{
-		
-		
-		
-		if(isset($_POST['currentMonth']))
+		if(isset($_POST['previousMonth']))
 			//ustawienie pierwszego i ostatniego dnia bieżącego miesiąca
-		$dataod=  date('Y-m-d ', mktime(0,0,0,date('m'),1,date('Y')));
-		$datado= date('Y-m-d', mktime(23,59,59,date('m')+1,0,date('Y')));
+		$dataod=  date('Y-m-d ', mktime(0,0,0,date('m')-1,1,date('Y')));
+		$datado= date('Y-m-d', mktime(23,59,59,date('m'),0,date('Y')));
 		{
 			$sql = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
 		WHERE incomes.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
@@ -31,6 +28,7 @@
 		$expenses = $userExpenses -> fetchAll();
 	}
 	}
+	
 
 ?>
 <!DOCTYPE html>
@@ -125,19 +123,16 @@
 									  <button class=" dropdown-toggle btn btn-warning" type="button" data-toggle="dropdown" aria-expanded="false">
 										Wybierz zakres dat
 									  </button>
-									   
+									   <form method="post" action="biezacy_miesiac.php">
 										  <div class="dropdown-menu">
-											<form method="post" action="biezacy_miesiac.php">
+										
 											<input class="dropdown-item btn btn-warning" type="submit"   name="currentMonth" value="Bieżący miesiąc">
-											</form>
-											<form method="post" action="poprzedni_miesiac.php">
-											<input class="dropdown-item btn btn-warning" type="submit"   name="previousMonth" value="Poprzedni miesiąc">
-										</form>
+											
 										<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
 											<a class="dropdown-item" href="#">Bieżący rok</a>
 											<a class="dropdown-item" href="#">Niestandardowy</a>-->
 										  </div>
-									  
+									  </form>
 								</div>
 								
 								
@@ -149,7 +144,7 @@
 										<table class="table table-bordered table-hover">
 											<thead>
 												<tr>
-												<th colspan="2" class="text-center"> Przychody z bieżącego miesiąca</th>
+												<th colspan="2" class="text-center"> Przychody z poprzedniego miesiąca</th>
 												</tr>
 												<tr>
 													<th scope="col">Kategoria</th>
@@ -175,7 +170,7 @@
 									<table class="table table-bordered table-hover">
 										<thead>
 											<tr>
-											<th colspan="2" class="text-center"> Wydatki z bieżącego miesiąca</th>
+											<th colspan="2" class="text-center"> Wydatki z poprzedniego miesiąca</th>
 											</tr>
 											<tr>
 												<th scope="col">Kategoria</th>

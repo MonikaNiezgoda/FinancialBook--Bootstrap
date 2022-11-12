@@ -120,16 +120,18 @@
 									  <button class=" dropdown-toggle btn btn-warning" type="button" data-toggle="dropdown" aria-expanded="false">
 										Wybierz zakres dat
 									  </button>
-									   <form method="post" action="biezacy_miesiac.php">
+									   
 										  <div class="dropdown-menu">
-										
-											<input class="dropdown-item btn btn-warning" type="submit"  data-toggle="collapse"  aria-expanded="false" aria-controls="collapse"  data-target="#collapse1" name="currentMonth" value="Bieżący miesiąc">
-											
-										<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
-											<a class="dropdown-item" href="#">Bieżący rok</a>
+										<form method="post" action="biezacy_miesiac.php">
+											<input class="dropdown-item btn btn-warning" type="submit"   name="currentMonth" value="Bieżący miesiąc">
+										 </form>
+										 <form method="post" action="poprzedni_miesiac.php">
+											<input class="dropdown-item btn btn-warning" type="submit"   name="previousMonth" value="Poprzedni miesiąc">
+										</form>
+											<!--	<a class="dropdown-item" href="#">Bieżący rok</a>
 											<a class="dropdown-item" href="#">Niestandardowy</a>-->
 										  </div>
-									  </form>
+									 
 								</div>
 								
 								
