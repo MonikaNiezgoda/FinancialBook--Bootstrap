@@ -24,7 +24,7 @@
 		$incomes = $userIncomes -> fetchAll();
 		
 		$sql = "SELECT sum(amount) as sum, name FROM expenses JOIN expenses_category_assigned_to_users as category ON expenses.expense_category_assigned_to_user_id = category.id  
-		WHERE expenses.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
+		WHERE expenses.user_id='$userId' AND date_of_expense BETWEEN '$dataod' AND '$datado'
 		GROUP BY name";
 		$userExpenses = $db->query($sql);
 		$expenses = $userExpenses -> fetchAll();
@@ -154,9 +154,13 @@
 												</tr>
 												<tbody>
 												<?php
+													$suma=0.00;
 													foreach($incomes as $incomes){
+														$suma += $incomes['sum'];
 													echo "<tr><td>{$incomes['name']} </td>  <td>{$incomes['sum']}</td></tr>";
 													}
+													$suma = number_format($suma,2,'.','');
+													echo "<tr><td>RAZEM</td>  <td> $suma</td></tr>";
 												?>
 												</tbody>
 											</thead>
@@ -176,9 +180,13 @@
 											</tr>
 											<tbody>
 												<?php
+												$sumExpenses=0;
 													foreach($expenses as $expenses){
+														$sumExpenses+=$expenses['sum'];
 													echo "<tr><td>{$expenses['name']} </td>  <td>{$expenses['sum']}</td></tr>";
 													}
+													$sumExpenses = number_format($sumExpenses,2,'.','');
+													echo "<tr><td>RAZEM</td>  <td> $sumExpenses</td></tr>";
 												?>
 											
 											</tbody>
