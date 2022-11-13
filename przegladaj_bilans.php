@@ -133,7 +133,7 @@
 										</form>
 								
 											<button class="dropdown-item btn btn-warning" type="button"   name="choosenDates"  data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">Niestandardowy</button>				 
-									</div>
+								</div>
 							</div>
 						</div>
 						

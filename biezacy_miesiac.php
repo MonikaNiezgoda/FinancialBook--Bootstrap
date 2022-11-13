@@ -120,30 +120,25 @@
 								<h3> Przeglądanie bilansu</h3>
 							</div>
 							<div class="col-md-4">	
-							
 								<div class="dropdown">
 									  <button class=" dropdown-toggle btn btn-warning" type="button" data-toggle="dropdown" aria-expanded="false">
 										Wybierz zakres dat
 									  </button>
 									   
-										  <div class="dropdown-menu">
+										<div class="dropdown-menu">
 											<form method="post" action="biezacy_miesiac.php">
 											<input class="dropdown-item btn btn-warning" type="submit"   name="currentMonth" value="Bieżący miesiąc">
 											</form>
 											<form method="post" action="poprzedni_miesiac.php">
 											<input class="dropdown-item btn btn-warning" type="submit"   name="previousMonth" value="Poprzedni miesiąc">
 										</form>
-										<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
-											<a class="dropdown-item" href="#">Bieżący rok</a>
-											<a class="dropdown-item" href="#">Niestandardowy</a>-->
-										  </div>
-									  
+										<form method="post" action="biezacy_rok.php">
+											<input class="dropdown-item btn btn-warning" type="submit"   name="currentYear" value="Bieżący rok">
+										</form>
+										 </div>
 								</div>
-								
-								
 							</div>
 						</div>
-					
 							<div class="row">
 									<div class="col-md-6 my-2">
 										<table class="table table-bordered table-hover">
@@ -157,13 +152,13 @@
 												</tr>
 												<tbody>
 												<?php
-													$suma=0.00;
+													$sumIncomes=0.00;
 													foreach($incomes as $incomes){
-														$suma += $incomes['sum'];
+														$sumIncomes += $incomes['sum'];
 													echo "<tr><td>{$incomes['name']} </td>  <td>{$incomes['sum']}</td></tr>";
 													}
-													$suma = number_format($suma,2,'.','');
-													echo "<tr><td>RAZEM</td>  <td> $suma</td></tr>";
+													$sumIncomes = number_format($sumIncomes,2,'.','');
+													echo "<tr><td>RAZEM</td>  <td> $sumIncomes</td></tr>";
 												?>
 												</tbody>
 											</thead>
@@ -198,15 +193,20 @@
 								</div>
 							</div>
 							
-							<div class="d-flex justify-content-center row" >
-											<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" href="#collapseAlert" aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
-										</div>
-										
-										<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
-										  Uważaj wpadasz w dług!
-										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<div class="d-flex justify-content-center row" >
+											<a  role="button" class="btn btn-success col-6 text-center mt-2 mb-2" data-toggle="collapse" <?php if($sumExpenses> $sumIncomes) { echo 'href="#collapseAlert"';} else {echo ' href="#collapseAlert2"';} ?> aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
+									</div>
+									<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
+											Uważaj wpadasz w dług!
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
-										  </button>
+											</button>
+										</div>
+										<div class="alert alert-success collapse mt-2" role="alert" id="collapseAlert2">
+											Gratulacje. Świetnie zarządzasz finansami!
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
 										</div>
 						</div>		
 					

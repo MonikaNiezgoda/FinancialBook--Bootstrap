@@ -139,9 +139,6 @@
 										<form method="post" action="biezacy_rok.php">
 											<input class="dropdown-item btn btn-warning" type="submit"   name="currentYear" value="Bieżący rok">
 										</form>
-										<!--	<a class="dropdown-item" href="#">Poprzedni miesiąc</a>
-											<a class="dropdown-item" href="#">Bieżący rok</a>
-											<a class="dropdown-item" href="#">Niestandardowy</a>-->
 										  </div>
 									  
 								</div>
@@ -155,7 +152,7 @@
 										<table class="table table-bordered table-hover">
 											<thead>
 												<tr>
-												<th colspan="2" class="text-center"> Przychody z bieżącego roku</th>
+												<th colspan="2" class="text-center"> Przychody od <?= $dataod?> do <?= $datado?></th>
 												</tr>
 												<tr>
 													<th scope="col">Kategoria</th>
@@ -181,7 +178,7 @@
 									<table class="table table-bordered table-hover">
 										<thead>
 											<tr>
-											<th colspan="2" class="text-center"> Wydatki z bieżącego roku</th>
+											<th colspan="2" class="text-center"> Wydatki od <?= $dataod?> do <?= $datado?></th>
 											</tr>
 											<tr>
 												<th scope="col">Kategoria</th>
