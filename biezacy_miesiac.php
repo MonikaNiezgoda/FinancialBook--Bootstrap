@@ -10,26 +10,23 @@
 	header('Location: index.php');
 	exit();
 	} else{
-		
-		
-		
 		if(isset($_POST['currentMonth']))
 			//ustawienie pierwszego i ostatniego dnia bieżącego miesiąca
 		$dataod=  date('Y-m-d ', mktime(0,0,0,date('m'),1,date('Y')));
 		$datado= date('Y-m-d', mktime(23,59,59,date('m')+1,0,date('Y')));
 		{
 			$sql = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
-		WHERE incomes.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
-		GROUP BY name";
-		$userIncomes = $db->query($sql);
-		$incomes = $userIncomes -> fetchAll();
-		
-		$sql = "SELECT sum(amount) as sum, name FROM expenses JOIN expenses_category_assigned_to_users as category ON expenses.expense_category_assigned_to_user_id = category.id  
-		WHERE expenses.user_id='$userId' AND date_of_expense BETWEEN '$dataod' AND '$datado'
-		GROUP BY name";
-		$userExpenses = $db->query($sql);
-		$expenses = $userExpenses -> fetchAll();
-	}
+			WHERE incomes.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
+			GROUP BY name";
+			$userIncomes = $db->query($sql);
+			$incomes = $userIncomes -> fetchAll();
+			
+			$sql = "SELECT sum(amount) as sum, name FROM expenses JOIN expenses_category_assigned_to_users as category ON expenses.expense_category_assigned_to_user_id = category.id  
+			WHERE expenses.user_id='$userId' AND date_of_expense BETWEEN '$dataod' AND '$datado'
+			GROUP BY name";
+			$userExpenses = $db->query($sql);
+			$expenses = $userExpenses -> fetchAll();
+		}
 	}
 
 ?>
@@ -192,24 +189,56 @@
 									</table>
 								</div>
 							</div>
-							
+	
 								<div class="d-flex justify-content-center row" >
-											<a  role="button" class="btn btn-success col-6 text-center mt-2 mb-2" data-toggle="collapse" <?php if($sumExpenses> $sumIncomes) { echo 'href="#collapseAlert"';} else {echo ' href="#collapseAlert2"';} ?> aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
-									</div>
-									<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
+											<a  role="button" class="btn btn-success col-6 text-center mt-2 mb-2" data-toggle="collapse" <?php if($sumExpenses>$sumIncomes) { echo 'href="#collapseAlert"';} else {echo ' href="#collapseAlert2"';} ?> aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
+								</div>
+								<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
 											Uważaj wpadasz w dług!
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-											</button>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+										</button>
+								</div>
+									
+									<div class="col collapse" id="collapseAlert2">
+										<div class=" alert alert-success mt-2 row "  role="alert" >
+												Gratulacje. Świetnie zarządzasz finansami!
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+												</button>
 										</div>
-										<div class="alert alert-success collapse mt-2" role="alert" id="collapseAlert2">
-											Gratulacje. Świetnie zarządzasz finansami!
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-						</div>		
-					
+										<div id="piechart"></div>
+									</div>
+									
+									
+									<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+									<script type="text/javascript">
+									// Load google charts
+									google.charts.load('current', {'packages':['corechart']});
+									google.charts.setOnLoadCallback(drawChart);
+
+									// Draw the chart and set the chart values
+									function drawChart() {
+									  var data = google.visualization.arrayToDataTable([
+									  ['Kategoria', 'Suma'],
+									  ['Praca', 8],
+									  ['Eat', 2],
+									  ['TV', 4],
+									  ['Gym', 2],
+									  ['Sleep', 8]
+									]);
+
+									  // Optional; add a title and set the width and height of the chart
+									  var options = {'title':'My Average Day', 'width':550, 'height':400};
+
+									  // Display the chart inside the <div> element with id="piechart"
+									  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+									  chart.draw(data, options);
+									}
+									</script>
+										
+						</div>
 				</main>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			
