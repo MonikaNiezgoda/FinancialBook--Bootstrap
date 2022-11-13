@@ -138,11 +138,17 @@
 						</div>
 						
 					</div>
-													<div class="row collapse  justify-content-center mb-2 mt-2" id="collapse">
-												<div class="card card-body col-md-4">
-													Tutaj ustawienie dat
-											</div>
-										</div>
+						<div class="row collapse  justify-content-center mb-2 mt-3" id="collapse">
+							<div class="card card-body col-md-4">
+								<form method="post" action="wybrane_daty.php">
+								Od dnia:
+								<input type="date" class="form-control input-sm  mb-2"  id="data"  min="1990-01-01" name="dataOd" required>
+								Do dnia:
+								<input type="date" class="form-control input-sm  mb-2"  id="data"  min="1990-01-01" name="dataDo" required>
+								<input type="submit"  class="btn btn-success btn-md" value="Zatwierdź">
+								</form>
+							</div>
+					</div>
 				</div>	
 			</main>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

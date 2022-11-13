@@ -155,7 +155,7 @@
 										<table class="table table-bordered table-hover">
 											<thead>
 												<tr>
-												<th colspan="2" class="text-center"> Przychody z bieżącego miesiąca</th>
+												<th colspan="2" class="text-center"> Przychody z bieżącego roku</th>
 												</tr>
 												<tr>
 													<th scope="col">Kategoria</th>
@@ -181,7 +181,7 @@
 									<table class="table table-bordered table-hover">
 										<thead>
 											<tr>
-											<th colspan="2" class="text-center"> Wydatki z bieżącego miesiąca</th>
+											<th colspan="2" class="text-center"> Wydatki z bieżącego roku</th>
 											</tr>
 											<tr>
 												<th scope="col">Kategoria</th>
