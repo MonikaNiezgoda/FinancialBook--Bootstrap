@@ -258,7 +258,7 @@
             type: 'pie'
         },
         title: {
-            text: 'Wykres przychodów za bieżący miesiąc'
+            text: 'Wykres przychodów za bieżący rok'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -305,7 +305,7 @@
             type: 'pie'
         },
         title: {
-            text: 'Wykres wydatków za bieżący miesiąc'
+            text: 'Wykres wydatków za bieżący rok'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
