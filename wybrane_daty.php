@@ -1,5 +1,4 @@
-
-		<?php
+<?php
 	session_start();
 	
 	require_once 'database.php';
@@ -16,7 +15,7 @@
 		{
 			//ustawienie pierwszego i ostatniego dnia bieżącego roku
 		$dataod=  $_POST['dataOd'];
-		$datado=$_POST['dataOd'];
+		$datado=$_POST['dataDo'];
 		
 			$sql = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
 		WHERE incomes.user_id='$userId' AND date_of_income BETWEEN '$dataod' AND '$datado'
@@ -202,11 +201,17 @@
 							</div>
 							
 							<div class="d-flex justify-content-center row" >
-											<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" href="#collapseAlert" aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
+											<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" <?php if($sumExpenses>$sumIncomes) { echo 'href="#collapseAlert"';} else {echo ' href="#collapseAlert2"';} ?>  aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
 										</div>
 										
 										<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
 										  Uważaj wpadasz w dług!
+										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										  </button>
+										</div>
+										<div class="alert alert-succeess collapse mt-2" role="alert" id="collapseAlert2">
+										  Gratulacje. Świetnie zarządzasz finansami!
 										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										  </button>
