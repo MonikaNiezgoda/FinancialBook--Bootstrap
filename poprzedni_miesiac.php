@@ -25,7 +25,20 @@
 		GROUP BY name";
 		$userExpenses = $db->query($sql);
 		$expenses = $userExpenses -> fetchAll();
-	}
+
+		$query = "SELECT sum(amount) as sum, name FROM incomes JOIN incomes_category_assigned_to_users as category ON incomes.income_category_assigned_to_user_id = category.id  
+		WHERE incomes.user_id='$userId'AND date_of_income BETWEEN '$dataod' AND '$datado'
+		GROUP BY name"; 	
+		// get the records on which pie chart is to be drawn
+		$getDataIncomes = $db->query($query);
+
+		$query = "SELECT sum(amount) as sum, name FROM expenses JOIN expenses_category_assigned_to_users as category ON expenses.expense_category_assigned_to_user_id = category.id  
+		WHERE expenses.user_id='$userId' AND date_of_expense BETWEEN '$dataod' AND '$datado'
+		GROUP BY name";	
+		// get the records on which pie chart is to be drawn
+		$getDataExpenses = $db->query($query);
+
+		}
 	}
 	
 
@@ -48,9 +61,16 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"> 
 	
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 	<!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<![endif]-->
+	
+	
 	
 </head>
 
@@ -157,13 +177,13 @@
 												</tr>
 												<tbody>
 												<?php
-													$suma=0.00;
+													$sumIncomes=0.00;
 													foreach($incomes as $incomes){
-														$suma += $incomes['sum'];
+														$sumIncomes += $incomes['sum'];
 													echo "<tr><td>{$incomes['name']} </td>  <td>{$incomes['sum']}</td></tr>";
 													}
-													$suma = number_format($suma,2,'.','');
-													echo "<tr><td>RAZEM</td>  <td> $suma</td></tr>";
+													$sumIncomes = number_format($sumIncomes,2,'.','');
+													echo "<tr><td>RAZEM</td>  <td> $sumIncomes</td></tr>";
 												?>
 												</tbody>
 											</thead>
@@ -199,18 +219,126 @@
 							</div>
 							
 							<div class="d-flex justify-content-center row" >
-											<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" href="#collapseAlert" aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
-										</div>
-										
-										<div class="alert alert-danger collapse mt-2" role="alert" id="collapseAlert">
-										  Uważaj wpadasz w dług!
-										  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										  </button>
+									<a  role="button" class="btn btn-success col-6 text-center mt-2" data-toggle="collapse" href="#piecharts" <?php if($sumExpenses>$sumIncomes) { echo 'href="#collapseAlert"';} else {echo ' href="#collapseAlert2"';} ?>  aria-expanded="false" aria-controls="collapse">Podsumuj</a>		
+							</div>
+										<div class=" collapse mt-2" id="piecharts">
+											<div class="row">
+												<div class="col-md-6" id="chartIncomes"></div>
+												<div class="col-md-6" id="chartExpenses"></div>
+											</div>
+											<?php if($sumIncomes>$sumExpenses){
+											echo "<div class='alert alert-success mt-2' role='alert'>
+												Gratulacje. Świetnie zarządzasz finansami!
+												<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+												<span aria-hidden='true'>&times;</span>
+												</button>
+											</div>";
+											}else {
+												echo "<div class='alert alert-danger mt-2' role='alert'>
+												Gratulacje. Świetnie zarządzasz finansami!
+												<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+												<span aria-hidden='true'>&times;</span>
+												</button>
+											</div>";
+											}
+											?>
 										</div>
 						</div>		
-					
 				</main>
+	<script>
+    // Build the chart
+    Highcharts.chart('chartIncomes', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Wykres przychodów za poprzedni miesiąc'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Udział',
+            colorByPoint: true,
+            data: [
+                <?php
+                $data = '';
+               
+                    while ($row = $getDataIncomes->fetch(PDO::FETCH_OBJ)){
+                        $data.='{ name:"'.$row->name.'",y:'.$row->sum.'},';
+                    
+                }
+                echo $data;
+                ?>
+            ]
+        }]
+    });
+</script>
+<script>
+    // Build the chart
+    Highcharts.chart('chartExpenses', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Wykres wydatków za poprzedni miesiąc'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Udział',
+            colorByPoint: true,
+            data: [
+                <?php
+                $data = '';
+               
+                    while ($row = $getDataExpenses->fetch(PDO::FETCH_OBJ)){
+                        $data.='{ name:"'.$row->name.'",y:'.$row->sum.'},';
+                    
+                }
+                echo $data;
+                ?>
+            ]
+        }]
+    });
+</script>
 			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 			
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
